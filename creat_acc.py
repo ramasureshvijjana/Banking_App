@@ -1,9 +1,12 @@
-from xml.dom import ValidationErr
-import pandas as pd
 from pandas.core.accessor import register_dataframe_accessor
 from validations import Validation
-import re
+from xml.dom import ValidationErr
+import pandas as pd
 import random as rd
+import datetime
+import re
+
+
 
 
 
@@ -114,6 +117,36 @@ class CrtAcc:
         except ValueError as e:
             print(e)
             self.adhar_num(data)
+
+
+    
+    def crdt_bal_fstym(self, acc_no):
+        try:
+            
+            print('You should pay 500 repees or more than 500 rupees for open an account.')
+            balance = float(input('Please pay 500 rupees: '))
+
+            if balance > 500:
+
+                x = datetime.datetime.now()
+                date = x.strftime("%d/%m/%G")
+                time = x.strftime("%I:%M:%S %p")
+
+                stmt_dict = {'Account_num': acc_no,'Date': date, 'Time': time, 'Deposit': balance,'Withdrawal': 0,'Total_Balance': balance}
+                blnc_dict = {'Account_num': acc_no,'Updated_date': date, 'Updated_Time': time,'Total_Balance': balance}
+
+                stmt_df = pd.DataFrame(stmt_dict, index=[0])
+                blnc_df = pd.DataFrame(blnc_dict, index=[0])
+
+                return stmt_df, blnc_df
+            else:
+                print(f'{balance} is invalied amount. Please pay atlest 500 rupees.')
+                self.crdt_bal_fstym(acc_no)
+
+        except ValueError as ve:
+            print(f'{balance} is invalied input. Please enter minimum 500 rupees.')
+            self.crdt_bal_fstym(acc_no)
+
             
 
     def create_acc():
@@ -135,7 +168,7 @@ class CrtAcc:
         acc_no = crt_acc.acc_num_crt(data)
         password = crt_acc.psw_input()
        
-        print(name, gender, age, phone_no, email, acc_no, password, adhr)
+        stmt_df, blnc_df = crt_acc.crdt_bal_fstym(acc_no)
 
 
             
@@ -144,6 +177,9 @@ class CrtAcc:
 
         df = pd.DataFrame(dct, index=[0])
         df.to_csv('E:/Python_projects/Bankig_App/data_base/Book1.csv', mode='a', index=False, header=False)
+
+        stmt_df.to_csv('E:/Python_projects/Bankig_App/data_base/Statements.csv', mode='a', index=False, header=False)
+        blnc_df.to_csv('E:/Python_projects/Bankig_App/data_base/Balance.csv', mode='a', index=False, header=False)
 
         print(f'Your account secussfully created\n################\n Wellcome {name}\n################\n')
         print(f'Your account number: {acc_no}\n\n NOTE: Please rember your account number, this is your login ID. \

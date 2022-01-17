@@ -1,5 +1,6 @@
 from creat_acc import CrtAcc as ca
 import show_balance as sb
+from deposit_withdraw import DpstWdrw as dw
 #import main
 
 class UserOptions:
@@ -35,6 +36,10 @@ class UserOptions:
         #     main.exit()
         if usr_opn == 1:
             sb.ShowBal.show_bal()
+        elif usr_opn == 3:
+            dw.deposit()
+
+                
 
 
     @classmethod
@@ -43,7 +48,7 @@ class UserOptions:
         1. Show My Details\n \
         2. Show Balance\n \
         3. Diposit\n \
-        4. withdraw\n \
+        4. withdrawal\n \
         5. Change Password\n \
         6. Update Phone Number & Email\n \
         7. Take Loan\n')
