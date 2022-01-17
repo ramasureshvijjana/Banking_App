@@ -38,6 +38,8 @@ class UserOptions:
             sb.ShowBal.show_bal()
         elif usr_opn == 3:
             dw.deposit()
+        elif usr_opn == 4:
+            dw.withdrawal()
 
                 
 
