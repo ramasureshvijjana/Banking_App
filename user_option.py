@@ -1,5 +1,5 @@
 from creat_acc import CrtAcc as ca
-import show_balance as sb
+from show_balance import ShowBal
 from deposit_withdraw import DpstWdrw as dw
 #import main
 
@@ -34,8 +34,8 @@ class UserOptions:
     def usr_opn_controll(cls,usr_opn):
         # if usr_opn == 0:
         #     main.exit()
-        if usr_opn == 1:
-            sb.ShowBal.show_bal()
+        if usr_opn == 2:
+            ShowBal.show_bal()
         elif usr_opn == 3:
             dw.deposit()
         elif usr_opn == 4:
@@ -53,7 +53,7 @@ class UserOptions:
         4. withdrawal\n \
         5. Change Password\n \
         6. Update Phone Number & Email\n \
-        7. Take Loan\n')
+        0. Exit\n')
 
         try:
             usr_opn = input('PLEASE SELECT YOUR OPTION:  ')
